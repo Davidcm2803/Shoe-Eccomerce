@@ -25,7 +25,7 @@ namespace shoeyStore.Controllers
                 if (user != null)
                 {
                     //Fills the list with cart items 
-                    CartItems = (from c in db.Carritoes
+                    CartItems = (from c in db.Carrito
                                  where c.IDCliente == user.IDCliente
                                  select new CartViewModel
                                  {
@@ -38,8 +38,8 @@ namespace shoeyStore.Controllers
                     //Then populates the object reference of the CartViewModel
                     foreach(var cartItem in CartItems) 
                     {
-                        cartItem.Inventario = db.Inventarios.Find(cartItem.IDInventario);
-                        cartItem.Producto = db.Productoes.Find(cartItem.IDProducto);
+                        cartItem.Inventario = db.Inventario.Find(cartItem.IDInventario);
+                        cartItem.Producto = db.Producto.Find(cartItem.IDProducto);
                     }
                 }
             }
@@ -60,20 +60,20 @@ namespace shoeyStore.Controllers
             {
                 if (user != null)
                 {
-                    user = db.Clientes.Include("Tarjetas").Include("Direccions").FirstOrDefault(u => u.IDCliente == user.IDCliente);
+                    user = db.Cliente.Include("Tarjetas").Include("Direccions").FirstOrDefault(u => u.IDCliente == user.IDCliente);
 
                     foreach (var card in user.Tarjetas)
                     {
-                        card.Cliente = user;
+                        card.Clientes = user;
                     }
                     foreach (var address in user.Direccions)
                     {
-                        address.Cliente = user;
+                        address.Clientes = user;
                     }
                     Session["Logged"] = user;
                     ViewBag.User = user;
 
-                    CartItems = (from c in db.Carritoes
+                    CartItems = (from c in db.Carrito
                                  where c.IDCliente == user.IDCliente
                                  select new CartViewModel
                                  {
@@ -85,9 +85,9 @@ namespace shoeyStore.Controllers
                                  }).ToList();
                     foreach (var cartItem in CartItems)
                     {
-                        cartItem.Cliente = db.Clientes.Find(user.IDCliente);
-                        cartItem.Inventario = db.Inventarios.Find(cartItem.IDInventario);
-                        cartItem.Producto = db.Productoes.Find(cartItem.IDProducto);
+                        cartItem.Cliente = db.Cliente.Find(user.IDCliente);
+                        cartItem.Inventario = db.Inventario.Find(cartItem.IDInventario);
+                        cartItem.Producto = db.Producto.Find(cartItem.IDProducto);
                     }
                 }
             }
@@ -106,7 +106,7 @@ namespace shoeyStore.Controllers
                 using (var db = new ShoeyDatabaseEntities())
                 {
                     //First we get the Inventory to confirm there are existing items
-                    Inventario inventory = db.Inventarios.Find(model.IDInventario);
+                    Inventario inventory = db.Inventario.Find(model.IDInventario);
                     if (inventory != null)
                     {
                         if (inventory.Cantidad >= model.Cantidad) //Checks if the quantity in Inventory is higher or equal than the one from the Model
@@ -117,7 +117,7 @@ namespace shoeyStore.Controllers
                             cart.IDInventario = model.IDInventario;
                             cart.Cantidad = model.Cantidad;
 
-                            db.Carritoes.Add(cart);
+                            db.Carrito.Add(cart);
                             db.SaveChanges();
 
                             return Content("200");
@@ -136,7 +136,7 @@ namespace shoeyStore.Controllers
             {
                 try 
                 {
-                    var cartTO = db.Carritoes.Find(id);
+                    var cartTO = db.Carrito.Find(id);
 
                     db.Entry(cartTO).State = System.Data.Entity.EntityState.Deleted;
                     db.SaveChanges();

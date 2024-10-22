@@ -23,18 +23,18 @@ namespace shoeyStore.Controllers
             using (var db = new ShoeyDatabaseEntities())
             {
                 // Start with all products
-                IQueryable<ProductTableViewModel> query = db.Productoes
+                IQueryable<ProductTableViewModel> query = db.Producto
                     .Select(p => new ProductTableViewModel
                     {
-                        IDProducto = p.IDProducto,
-                        IDVendedor = p.IDVendedor,
-                        Nombre = p.Nombre,
-                        Categoria = p.Categoria,
-                        Genero = p.Genero,
-                        Marca = p.Marca,
-                        Modelo = p.Modelo,
-                        Imagen = p.Imagen,
-                        InventoryEntries = db.Inventarios.Where(i => i.IDProducto == p.IDProducto).Select(i => new InventoryViewModel
+                        IDProductoes = p.IDProducto,
+                        IDVendedors = p.IDVendedor,
+                        Nombres = p.Nombre,
+                        Categorias = p.Categoria,
+                        Generos = p.Genero,
+                        Marcas = p.Marca,
+                        Modelos = p.Modelo,
+                        Imagens = p.Imagen,
+                        InventoryEntries = db.Inventario.Where(i => i.IDProducto == p.IDProducto).Select(i => new InventoryViewModel
                         {
                             IDInventario = i.IDInventario,
                             TallaUS = i.TallaUS,
@@ -43,18 +43,18 @@ namespace shoeyStore.Controllers
                         }).ToList(),
                         Calificaciones = p.Calificacions,
                         DetallesOrdens = p.DetallesOrdens,
-                        Vendedor = p.Vendedor
+                        Vendedor = p.Vendedors
                     });
 
                 // Apply filters
                 if (!string.IsNullOrEmpty(gender))
                 {
-                    query = query.Where(p => p.Genero == gender);
+                    query = query.Where(p => p.Generos == gender);
                 }
 
                 if (!string.IsNullOrEmpty(brand))
                 {
-                    query = query.Where(p => p.Marca == brand);
+                    query = query.Where(p => p.Marcas == brand);
                 }
 
                 if (minPrice.HasValue)
@@ -80,7 +80,7 @@ namespace shoeyStore.Controllers
         {
             using (var db = new ShoeyDatabaseEntities())
             {
-                var uniqueBrands = db.Productoes.Select(p => p.Marca).Distinct().ToList();
+                var uniqueBrands = db.Producto.Select(p => p.Marca).Distinct().ToList();
 
                 // Convert strings to SelectListItem
                 var brandItems = uniqueBrands.Select(brand => new SelectListItem

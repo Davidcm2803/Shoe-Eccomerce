@@ -25,7 +25,7 @@ namespace shoeyStore.Controllers
             {
                 if (user != null)
                 {
-                    AccessList = (from e in db.Clientes
+                    AccessList = (from e in db.Cliente
                                   where e.IDCliente == user.IDCliente
                                   orderby e.IDCliente
                                   select new AccessTableViewModel
@@ -48,7 +48,7 @@ namespace shoeyStore.Controllers
             {
                 if (user != null)
                 {
-                    var userData = db.Clientes.FirstOrDefault(e => e.IDCliente == user.IDCliente);
+                    var userData = db.Cliente.FirstOrDefault(e => e.IDCliente == user.IDCliente);
 
                     if (userData != null)
                     {
@@ -75,7 +75,7 @@ namespace shoeyStore.Controllers
             {
                 if (user != null)
                 {
-                    var userData = db.Clientes.FirstOrDefault(e => e.IDCliente == user.IDCliente);
+                    var userData = db.Cliente.FirstOrDefault(e => e.IDCliente == user.IDCliente);
 
                     if (userData != null)
                     {
@@ -103,7 +103,7 @@ namespace shoeyStore.Controllers
             {
                 if (user != null)
                 {
-                    AddressList = (from e in db.Direccions
+                    AddressList = (from e in db.Direccion
                                    where e.IDCliente == user.IDCliente
                                    orderby e.Nombre
                                    select new AddressTableViewModel
@@ -150,7 +150,7 @@ namespace shoeyStore.Controllers
                 direccionTO.ZIP = model.ZIP;
                 direccionTO.Telefono = model.Telefono;
 
-                db.Direccions.Add(direccionTO);
+                db.Direccion.Add(direccionTO);
                 db.SaveChanges();
 
                 return Redirect(Url.Content("~/Settings/Shipping"));
@@ -165,7 +165,7 @@ namespace shoeyStore.Controllers
 
             using (var db = new ShoeyDatabaseEntities())
             {
-                var shipTO = db.Direccions.Find(id);
+                var shipTO = db.Direccion.Find(id);
 
                 if (shipTO != null)
                 {
@@ -189,7 +189,7 @@ namespace shoeyStore.Controllers
             if (!ModelState.IsValid) { return View(model); }
             using (var db = new ShoeyDatabaseEntities())
             {
-                var shipTO = db.Direccions.Find(model.IDDireccion);
+                var shipTO = db.Direccion.Find(model.IDDireccion);
                 if (shipTO != null)
                 {
                     shipTO.IDDireccion = model.IDDireccion;
@@ -223,10 +223,10 @@ namespace shoeyStore.Controllers
             {
                 if (user != null)
                 {
-                    user = db.Clientes.Include("Tarjetas").FirstOrDefault(u => u.IDCliente == user.IDCliente);
+                    user = db.Cliente.Include("Tarjetas").FirstOrDefault(u => u.IDCliente == user.IDCliente);
                     foreach (var card in user.Tarjetas)
                     {
-                        card.Cliente = user;
+                        card.Clientes = user;
                     }
                     Session["Logged"] = user;
 
@@ -273,7 +273,7 @@ namespace shoeyStore.Controllers
                 accountTO.Expiracion = model.Expiracion;
                 accountTO.CVV = model.CVV;
 
-                db.Tarjetas.Add(accountTO);
+                db.Tarjeta.Add(accountTO);
                 db.SaveChanges();
 
                 return Redirect(Url.Content("~/Settings/Payment"));
@@ -285,7 +285,7 @@ namespace shoeyStore.Controllers
         {
             using (var db = new ShoeyDatabaseEntities())
             {
-                var cardTO = db.Tarjetas.Find(IDTarjetas);
+                var cardTO = db.Tarjeta.Find(IDTarjetas);
 
                 if (cardTO != null)
                 {
@@ -304,11 +304,11 @@ namespace shoeyStore.Controllers
         {
             using (var db = new ShoeyDatabaseEntities())
             {
-                var shippingTO = db.Direccions.Find(IDDireccion);
+                var shippingTO = db.Direccion.Find(IDDireccion);
 
                 if (shippingTO != null)
                 {
-                    db.Direccions.Remove(shippingTO);
+                    db.Direccion.Remove(shippingTO);
                     db.SaveChanges();
                     return Content("200");
                 }

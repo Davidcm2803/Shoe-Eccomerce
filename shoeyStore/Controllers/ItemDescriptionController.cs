@@ -22,9 +22,9 @@ namespace shoeyStore.Controllers
             using (var db = new ShoeyDatabaseEntities())
             {
                 // Retrieve the product from the database based on its id
-                var product = db.Productoes.Find(id);
+                var product = db.Producto.Find(id);
                 // Fills a list with the Inventory items where the IDProducto matches the same as in the product to edit 
-                List<InventoryViewModel> inventoryList = db.Inventarios.Where(i => i.IDProducto == product.IDProducto).Select(i => new InventoryViewModel
+                List<InventoryViewModel> inventoryList = db.Inventario.Where(i => i.IDProducto == product.IDProducto).Select(i => new InventoryViewModel
                 {
                     IDInventario = i.IDInventario,
                     TallaUS = i.TallaUS,

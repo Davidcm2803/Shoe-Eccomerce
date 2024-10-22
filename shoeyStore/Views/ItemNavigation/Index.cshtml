@@ -11,7 +11,7 @@
             <form asp-action="Index" method="get">
                 <div class="form-group mb-3">
                     <label for="genderFilter">Gender:</label>
-                    @Html.DropDownList("gender", new SelectList(Model.Select(p => p.Genero).Distinct()), "All Genders", new { @class = "form-control" })
+                    @Html.DropDownList("gender", new SelectList(Model.Select(p => p.Generos).Distinct()), "All Genders", new { @class = "form-control" })
                 </div>
                 <div class="form-group mb-3">
                     <label for="brandFilter">Brand:</label>
@@ -38,13 +38,13 @@
                     { 
                         <div class="col-md-4 mb-4">
                             <div class="card h-100">
-                                <img src="data:image;base64,@(Convert.ToBase64String(product.Imagen))" class="card-img-top" alt="Product Image">
+                                <img src="data:image;base64,@(Convert.ToBase64String(product.Imagens))" class="card-img-top" alt="Product Image">
                                 <div class="card-body">
                                     <h5 class="card-title h-50">@product.ItemName</h5>
                                     <p class="card-title">Price: $@product.GetMinimumPrice()</p>
                                     <div class="d-flex mb-5">
-                                        <a href="@Url.Content("~/ItemDescription/Details/"+product.IDProducto)" class="btn btn-dark flex-fill me-3">View Item</a>
-                                        <a href="@Url.Content("~/ItemDescription/Details/"+product.IDProducto)" class="btn btn-success"><i class="bi bi-plus-lg text-white p-2"></i></a>
+                                        <a href="@Url.Content("~/ItemDescription/Details/"+product.IDProductoes)" class="btn btn-dark flex-fill me-3">View Item</a>
+                                        <a href="@Url.Content("~/ItemDescription/Details/"+product.IDProductoes)" class="btn btn-success"><i class="bi bi-plus-lg text-white p-2"></i></a>
                                     </div>
                                 </div>
                             </div>

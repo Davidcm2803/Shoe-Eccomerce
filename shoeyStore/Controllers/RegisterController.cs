@@ -33,7 +33,7 @@ namespace shoeyStore.Controllers
                     clientTO.CorreoElectronico = model.CorreoElectronico;
                     clientTO.Contrasenna = model.Contrasenna;
 
-                    db.Clientes.Add(clientTO);
+                    db.Cliente.Add(clientTO);
                     db.SaveChanges();
                     //Returns to Home Screen and enables the Toast to confirm registration
                     return Redirect(Url.Content("~/Home/Index?showToast=registrationSuccessful"));

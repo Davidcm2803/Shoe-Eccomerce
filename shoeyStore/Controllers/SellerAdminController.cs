@@ -29,21 +29,21 @@ namespace shoeyStore.Controllers
                 //If logged then it will fill the list of products
                 if (user != null)
                 {
-                    listProducts = (from p in db.Productoes
+                    listProducts = (from p in db.Producto
                                     where p.IDVendedor == user.IDVendedor
                                     select new ProductTableViewModel
                                     {
-                                        IDProducto = p.IDProducto,
-                                        IDVendedor = p.IDVendedor,
-                                        Nombre = p.Nombre,
-                                        Categoria = p.Categoria,
-                                        Genero = p.Genero,
-                                        Marca = p.Marca,
-                                        Modelo = p.Modelo,
-                                        Imagen = p.Imagen,
+                                        IDProductoes = p.IDProducto,
+                                        IDVendedors = p.IDVendedor,
+                                        Nombres = p.Nombre,
+                                        Categorias = p.Categoria,
+                                        Generos = p.Genero,
+                                        Marcas = p.Marca,
+                                        Modelos = p.Modelo,
+                                        Imagens = p.Imagen,
                                         Calificaciones = p.Calificacions,
                                         DetallesOrdens = p.DetallesOrdens,
-                                        Vendedor = p.Vendedor
+                                        Vendedor = p.Vendedors
                                     }).ToList();
                 }
             }
@@ -79,7 +79,7 @@ namespace shoeyStore.Controllers
                     Imagen = Convert.FromBase64String(model.ImagenBase64),
                 };
 
-                db.Productoes.Add(newProduct);
+                db.Producto.Add(newProduct);
                 db.SaveChanges();
                 //If the model has items on the InventoryEntries list, it will add an entry to the Inventory table for each entry
                 if (model.InventoryEntries != null)
@@ -94,7 +94,7 @@ namespace shoeyStore.Controllers
                             Precio = entry.Precio,
                         };
 
-                        db.Inventarios.Add(newInventory);
+                        db.Inventario.Add(newInventory);
                     }
                 }
 
@@ -110,9 +110,9 @@ namespace shoeyStore.Controllers
             using (var db = new ShoeyDatabaseEntities())
             {
                 // Retrieve the product from the database based on its id
-                var product = db.Productoes.Find(id);
+                var product = db.Producto.Find(id);
                 // Fills a list with the Inventory items where the IDProducto matches the same as in the product to edit 
-                List<InventoryViewModel> inventoryList = db.Inventarios.Where(i => i.IDProducto == product.IDProducto).Select(i => new InventoryViewModel
+                List<InventoryViewModel> inventoryList = db.Inventario.Where(i => i.IDProducto == product.IDProducto).Select(i => new InventoryViewModel
                 {
                     IDInventario = i.IDInventario,
                     TallaUS = i.TallaUS,
@@ -150,8 +150,8 @@ namespace shoeyStore.Controllers
             using (var db = new ShoeyDatabaseEntities())
             {
                 // Retrieve the product from the database based on its id
-                var existingProduct = db.Productoes.Find(model.IDProducto);
-                List<InventoryViewModel> inventoryList = db.Inventarios.Where(i => i.IDProducto == model.IDProducto).Select(i => new InventoryViewModel
+                var existingProduct = db.Producto.Find(model.IDProducto);
+                List<InventoryViewModel> inventoryList = db.Inventario.Where(i => i.IDProducto == model.IDProducto).Select(i => new InventoryViewModel
                 {
                     IDInventario = i.IDInventario,
                     TallaUS = i.TallaUS,
@@ -189,7 +189,7 @@ namespace shoeyStore.Controllers
                     foreach (var entry in model.InventoryEntries)
                     {
                         // Find the corresponding inventory entry
-                        var existingInventory = db.Inventarios.Find(entry.IDInventario);
+                        var existingInventory = db.Inventario.Find(entry.IDInventario);
 
                         if (existingInventory != null)
                         {
@@ -209,17 +209,17 @@ namespace shoeyStore.Controllers
                                 Precio = entry.Precio,
                             };
 
-                            db.Inventarios.Add(newInventory);
+                            db.Inventario.Add(newInventory);
                             // Save changes only once after the loop
                         }
                     }
 
                     // Remove inventory entries that are not present in the model
                     var inventoryIds = model.InventoryEntries.Select(e => e.IDInventario).ToList();
-                    var inventoriesToRemove = db.Inventarios.Where(i => i.IDProducto == existingProduct.IDProducto && !inventoryIds.Contains(i.IDInventario)).ToList();
+                    var inventoriesToRemove = db.Inventario.Where(i => i.IDProducto == existingProduct.IDProducto && !inventoryIds.Contains(i.IDInventario)).ToList();
                     foreach (var inventory in inventoriesToRemove)
                     {
-                        db.Inventarios.Remove(inventory);
+                        db.Inventario.Remove(inventory);
                     }
 
                     // Save changes once after the loop
@@ -235,10 +235,10 @@ namespace shoeyStore.Controllers
         {
             using (var db = new ShoeyDatabaseEntities())
             {
-                var productTO = db.Productoes.Find(Id);
+                var productTO = db.Producto.Find(Id);
 
-                var inventoryItems = db.Inventarios.Where(i => i.IDProducto == Id);
-                db.Inventarios.RemoveRange(inventoryItems);
+                var inventoryItems = db.Inventario.Where(i => i.IDProducto == Id);
+                db.Inventario.RemoveRange(inventoryItems);
 
                 db.Entry(productTO).State = System.Data.Entity.EntityState.Deleted;
                 db.SaveChanges();
@@ -255,7 +255,7 @@ namespace shoeyStore.Controllers
 
             using (var db = new ShoeyDatabaseEntities())
             {
-                var infoTO = db.Vendedors.Find(user.IDVendedor);
+                var infoTO = db.Vendedor.Find(user.IDVendedor);
                 if (infoTO != null)
                 {
                     model.IDVendedor = infoTO.IDVendedor;
@@ -273,7 +273,7 @@ namespace shoeyStore.Controllers
 
             using (var db = new ShoeyDatabaseEntities())
             {
-                var infoTO = db.Vendedors.Find(model.IDVendedor);
+                var infoTO = db.Vendedor.Find(model.IDVendedor);
                 if (infoTO != null)
                 {
                     infoTO.CorreoElectronico = model.CorreoElectronico;

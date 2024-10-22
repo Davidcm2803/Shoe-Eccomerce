@@ -23,7 +23,7 @@ namespace shoeyStore.Controllers
             {
                 using (var db = new ShoeyDatabaseEntities())
                 {
-                    var list = from seller in db.Vendedors
+                    var list = from seller in db.Vendedor
                                where seller.CorreoElectronico == Email && seller.Contrasenna == Password
                                select seller;
 
@@ -71,7 +71,7 @@ namespace shoeyStore.Controllers
                 sellerTO.CorreoElectronico = model.CorreoElectronico;
                 sellerTO.Contrasenna = model.Contrasenna;
 
-                db.Vendedors.Add(sellerTO);
+                db.Vendedor.Add(sellerTO);
                 db.SaveChanges();
 
                 return Redirect(Url.Content("~/SellerLogin/Index?showToast=registrationSuccessful"));

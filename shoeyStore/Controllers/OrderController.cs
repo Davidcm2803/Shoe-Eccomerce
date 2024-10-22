@@ -26,7 +26,7 @@ namespace shoeyStore.Controllers
                 if (user != null)
                 {
                     //Fills the list with the orders from the database
-                    listOrders = (from o in db.Ordens
+                    listOrders = (from o in db.Orden
                                   where o.IDCliente == user.IDCliente
                                   select new OrderTableViewModel
                                   {
@@ -38,7 +38,7 @@ namespace shoeyStore.Controllers
                                       MontoTotal = o.MontoTotal,
                                       Estado = o.Estado,
                                       DetallesOrdens = o.DetallesOrdens,
-                                      OrderDetails = (from od in db.DetallesOrdens
+                                      OrderDetails = (from od in db.DetallesOrden
                                                       where od.IDOrden == o.IDOrden
                                                       select new OrderDetailViewModel
                                                       {
@@ -47,18 +47,18 @@ namespace shoeyStore.Controllers
                                                           IDInventario = od.IDInventario,
                                                           Cantidad = od.Cantidad,
                                                           IDProducto = od.IDProducto,
-                                                          Producto = od.Producto,
+                                                          Producto = od.Productoes,
                                                       }).ToList()
                 }).ToList();
 
                     foreach (var o in listOrders) 
                     {
-                        o.Direccion = db.Direccions.Find(o.IDDireccion);
-                        o.Tarjeta = db.Tarjetas.Find(o.IDTarjeta);
+                        o.Direccion = db.Direccion.Find(o.IDDireccion);
+                        o.Tarjeta = db.Tarjeta.Find(o.IDTarjeta);
                         foreach (var od in o.OrderDetails)  
                         {
-                            od.Inventario = db.Inventarios.Find(od.IDInventario);
-                            od.Producto = db.Productoes.Find(od.IDProducto);
+                            od.Inventario = db.Inventario.Find(od.IDInventario);
+                            od.Producto = db.Producto.Find(od.IDProducto);
                         }
                     };
                 }
@@ -88,7 +88,7 @@ namespace shoeyStore.Controllers
                             Expiracion = order.Tarjeta.Expiracion,
                             CVV = order.Tarjeta.CVV,
                         };
-                        db.Tarjetas.Add(cardTO);
+                        db.Tarjeta.Add(cardTO);
                         db.SaveChanges();
 
                         orderTO.IDTarjeta = cardTO.IDTarjeta;
@@ -110,7 +110,7 @@ namespace shoeyStore.Controllers
                             ZIP = order.Direccion.ZIP,
                             Telefono = order.Direccion.Telefono,
                         };
-                        db.Direccions.Add(addressTO);
+                        db.Direccion.Add(addressTO);
                         db.SaveChanges();
 
                         orderTO.IDDireccion = addressTO.IDDireccion;
@@ -123,7 +123,7 @@ namespace shoeyStore.Controllers
                     orderTO.MontoTotal = order.MontoTotal;
                     orderTO.IDCliente = user.IDCliente;
 
-                    db.Ordens.Add(orderTO);
+                    db.Orden.Add(orderTO);
                     db.SaveChanges();
 
                     foreach (var orderDetail in order.DetallesOrdens)
@@ -135,12 +135,12 @@ namespace shoeyStore.Controllers
                             IDInventario = orderDetail.IDInventario,
                             Cantidad = orderDetail.Cantidad,
                         };
-                        db.DetallesOrdens.Add(orderDetailsTO);
+                        db.DetallesOrden.Add(orderDetailsTO);
                         db.SaveChanges();
                     }
                     foreach (var cart in order.CartItems) 
                     {
-                        var cartTO = db.Carritoes.Find(cart.IDCarrito);
+                        var cartTO = db.Carrito.Find(cart.IDCarrito);
                         db.Entry(cartTO).State = System.Data.Entity.EntityState.Deleted;
                         db.SaveChanges();
                     }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="c39a4cb0440b4cf99a208f7324aa9b43" Name="Diagram1">
+      <Diagram DiagramId="41f1d24b5584440aa5fba490a704a573" Name="Diagram1">
         <EntityTypeShape EntityType="ShoeyDatabaseModel.Calificacion" Width="1.5" PointX="3.75" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ShoeyDatabaseModel.Carrito" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ShoeyDatabaseModel.Cliente" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />

@@ -4,17 +4,17 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ShoeyDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Calificacion">
+    <Schema Namespace="ShoeyDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Calificacions">
           <Key>
             <PropertyRef Name="IDcalificacion" />
           </Key>
           <Property Name="IDcalificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDProducto" Type="int" />
           <Property Name="Comentarios" Type="varchar" MaxLength="50" />
-          <Property Name="Calificacion" Type="int" />
+          <Property Name="Calificacion1" Type="int" />
         </EntityType>
-        <EntityType Name="Carrito">
+        <EntityType Name="Carritoes">
           <Key>
             <PropertyRef Name="IDCarrito" />
           </Key>
@@ -24,7 +24,7 @@
           <Property Name="IDInventario" Type="int" />
           <Property Name="Cantidad" Type="int" />
         </EntityType>
-        <EntityType Name="Cliente">
+        <EntityType Name="Clientes">
           <Key>
             <PropertyRef Name="IDCliente" />
           </Key>
@@ -33,7 +33,7 @@
           <Property Name="CorreoElectronico" Type="varchar" MaxLength="100" />
           <Property Name="Contrasenna" Type="varchar" MaxLength="20" />
         </EntityType>
-        <EntityType Name="DetallesOrden">
+        <EntityType Name="DetallesOrdens">
           <Key>
             <PropertyRef Name="IDDetalleOrden" />
           </Key>
@@ -43,7 +43,7 @@
           <Property Name="Cantidad" Type="int" />
           <Property Name="IDInventario" Type="int" />
         </EntityType>
-        <EntityType Name="Direccion">
+        <EntityType Name="Direccions">
           <Key>
             <PropertyRef Name="IDDireccion" />
           </Key>
@@ -57,17 +57,17 @@
           <Property Name="ZIP" Type="varchar" MaxLength="100" />
           <Property Name="Telefono" Type="varchar" MaxLength="100" />
         </EntityType>
-        <EntityType Name="Inventario">
+        <EntityType Name="Inventarios">
           <Key>
             <PropertyRef Name="IDInventario" />
           </Key>
           <Property Name="IDInventario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDProducto" Type="int" Nullable="false" />
-          <Property Name="TallaUS" Type="numeric" Precision="10" Scale="2" />
+          <Property Name="TallaUS" Type="decimal" Precision="10" Scale="2" />
           <Property Name="Cantidad" Type="int" />
           <Property Name="Precio" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
-        <EntityType Name="Orden">
+        <EntityType Name="Ordens">
           <Key>
             <PropertyRef Name="IDOrden" />
           </Key>
@@ -80,7 +80,7 @@
           <Property Name="Estado" Type="varchar" MaxLength="50" />
           <Property Name="IDVendedor" Type="int" />
         </EntityType>
-        <EntityType Name="Producto">
+        <EntityType Name="Productoes">
           <Key>
             <PropertyRef Name="IDProducto" />
           </Key>
@@ -93,17 +93,17 @@
           <Property Name="Modelo" Type="varchar" MaxLength="100" />
           <Property Name="Imagen" Type="varbinary(max)" />
         </EntityType>
-        <EntityType Name="Tarjeta">
+        <EntityType Name="Tarjetas">
           <Key>
             <PropertyRef Name="IDTarjeta" />
           </Key>
           <Property Name="IDTarjeta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDCliente" Type="int" />
           <Property Name="Numero" Type="varchar" MaxLength="100" />
-          <Property Name="Expiracion" Type="date" />
+          <Property Name="Expiracion" Type="datetime" />
           <Property Name="CVV" Type="varchar" MaxLength="3" />
         </EntityType>
-        <EntityType Name="Vendedor">
+        <EntityType Name="Vendedors">
           <Key>
             <PropertyRef Name="IDVendedor" />
           </Key>
@@ -115,291 +115,290 @@
           <Property Name="Verificado" Type="bit" />
         </EntityType>
         <Association Name="FK__Calificac__IDPro__440B1D61">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
-          <End Role="Calificacion" Type="Self.Calificacion" Multiplicity="*" />
+          <End Role="Productoes" Type="Self.Productoes" Multiplicity="0..1" />
+          <End Role="Calificacions" Type="Self.Calificacions" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
+            <Principal Role="Productoes">
               <PropertyRef Name="IDProducto" />
             </Principal>
-            <Dependent Role="Calificacion">
+            <Dependent Role="Calificacions">
               <PropertyRef Name="IDProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__DetallesO__IDOrd__403A8C7D">
-          <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
-          <End Role="DetallesOrden" Type="Self.DetallesOrden" Multiplicity="*" />
+          <End Role="Inventarios" Type="Self.Inventarios" Multiplicity="0..1" />
+          <End Role="DetallesOrdens" Type="Self.DetallesOrdens" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Inventario">
+            <Principal Role="Inventarios">
               <PropertyRef Name="IDInventario" />
             </Principal>
-            <Dependent Role="DetallesOrden">
+            <Dependent Role="DetallesOrdens">
               <PropertyRef Name="IDInventario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__DetallesO__IDPro__412EB0B6">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
-          <End Role="DetallesOrden" Type="Self.DetallesOrden" Multiplicity="*" />
+          <End Role="Productoes" Type="Self.Productoes" Multiplicity="0..1" />
+          <End Role="DetallesOrdens" Type="Self.DetallesOrdens" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
+            <Principal Role="Productoes">
               <PropertyRef Name="IDProducto" />
             </Principal>
-            <Dependent Role="DetallesOrden">
+            <Dependent Role="DetallesOrdens">
               <PropertyRef Name="IDProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Orden__IDCliente__3D5E1FD2">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
-          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="0..1" />
+          <End Role="Ordens" Type="Self.Ordens" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cliente">
+            <Principal Role="Clientes">
               <PropertyRef Name="IDCliente" />
             </Principal>
-            <Dependent Role="Orden">
+            <Dependent Role="Ordens">
               <PropertyRef Name="IDCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Producto__IDVend__38996AB5">
-          <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="0..1" />
-          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <End Role="Vendedors" Type="Self.Vendedors" Multiplicity="0..1" />
+          <End Role="Productoes" Type="Self.Productoes" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Vendedor">
+            <Principal Role="Vendedors">
               <PropertyRef Name="IDVendedor" />
             </Principal>
-            <Dependent Role="Producto">
+            <Dependent Role="Productoes">
               <PropertyRef Name="IDVendedor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Carrito_Cliente1">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
-          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="0..1" />
+          <End Role="Carritoes" Type="Self.Carritoes" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cliente">
+            <Principal Role="Clientes">
               <PropertyRef Name="IDCliente" />
             </Principal>
-            <Dependent Role="Carrito">
+            <Dependent Role="Carritoes">
               <PropertyRef Name="IDCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Carrito_Inventario1">
-          <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
-          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+          <End Role="Inventarios" Type="Self.Inventarios" Multiplicity="0..1" />
+          <End Role="Carritoes" Type="Self.Carritoes" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Inventario">
+            <Principal Role="Inventarios">
               <PropertyRef Name="IDInventario" />
             </Principal>
-            <Dependent Role="Carrito">
+            <Dependent Role="Carritoes">
               <PropertyRef Name="IDInventario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Carrito_Producto1">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
-          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+          <End Role="Productoes" Type="Self.Productoes" Multiplicity="0..1" />
+          <End Role="Carritoes" Type="Self.Carritoes" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
+            <Principal Role="Productoes">
               <PropertyRef Name="IDProducto" />
             </Principal>
-            <Dependent Role="Carrito">
+            <Dependent Role="Carritoes">
               <PropertyRef Name="IDProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DetallesOrden_DetallesOrden">
-          <End Role="DetallesOrden" Type="Self.DetallesOrden" Multiplicity="1" />
-          <End Role="DetallesOrden1" Type="Self.DetallesOrden" Multiplicity="0..1" />
+          <End Role="DetallesOrdens" Type="Self.DetallesOrdens" Multiplicity="1" />
+          <End Role="DetallesOrdens1" Type="Self.DetallesOrdens" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="DetallesOrden">
+            <Principal Role="DetallesOrdens">
               <PropertyRef Name="IDDetalleOrden" />
             </Principal>
-            <Dependent Role="DetallesOrden1">
+            <Dependent Role="DetallesOrdens1">
               <PropertyRef Name="IDDetalleOrden" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DetallesOrden_Orden">
-          <End Role="Orden" Type="Self.Orden" Multiplicity="0..1" />
-          <End Role="DetallesOrden" Type="Self.DetallesOrden" Multiplicity="*" />
+          <End Role="Ordens" Type="Self.Ordens" Multiplicity="0..1" />
+          <End Role="DetallesOrdens" Type="Self.DetallesOrdens" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Orden">
+            <Principal Role="Ordens">
               <PropertyRef Name="IDOrden" />
             </Principal>
-            <Dependent Role="DetallesOrden">
+            <Dependent Role="DetallesOrdens">
               <PropertyRef Name="IDOrden" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Direccion_Cliente1">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
-          <End Role="Direccion" Type="Self.Direccion" Multiplicity="*" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="0..1" />
+          <End Role="Direccions" Type="Self.Direccions" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cliente">
+            <Principal Role="Clientes">
               <PropertyRef Name="IDCliente" />
             </Principal>
-            <Dependent Role="Direccion">
+            <Dependent Role="Direccions">
               <PropertyRef Name="IDCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Inventario_Producto1">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="Inventario" Type="Self.Inventario" Multiplicity="*" />
+          <End Role="Productoes" Type="Self.Productoes" Multiplicity="1" />
+          <End Role="Inventarios" Type="Self.Inventarios" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
+            <Principal Role="Productoes">
               <PropertyRef Name="IDProducto" />
             </Principal>
-            <Dependent Role="Inventario">
+            <Dependent Role="Inventarios">
               <PropertyRef Name="IDProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orden_Direccion">
-          <End Role="Direccion" Type="Self.Direccion" Multiplicity="0..1" />
-          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <End Role="Direccions" Type="Self.Direccions" Multiplicity="0..1" />
+          <End Role="Ordens" Type="Self.Ordens" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Direccion">
+            <Principal Role="Direccions">
               <PropertyRef Name="IDDireccion" />
             </Principal>
-            <Dependent Role="Orden">
+            <Dependent Role="Ordens">
               <PropertyRef Name="IDDireccion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orden_Orden">
-          <End Role="Orden" Type="Self.Orden" Multiplicity="1" />
-          <End Role="Orden1" Type="Self.Orden" Multiplicity="0..1" />
+          <End Role="Ordens" Type="Self.Ordens" Multiplicity="1" />
+          <End Role="Ordens1" Type="Self.Ordens" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="Orden">
+            <Principal Role="Ordens">
               <PropertyRef Name="IDOrden" />
             </Principal>
-            <Dependent Role="Orden1">
+            <Dependent Role="Ordens1">
               <PropertyRef Name="IDOrden" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orden_Tarjeta">
-          <End Role="Tarjeta" Type="Self.Tarjeta" Multiplicity="0..1" />
-          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <End Role="Tarjetas" Type="Self.Tarjetas" Multiplicity="0..1" />
+          <End Role="Ordens" Type="Self.Ordens" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tarjeta">
+            <Principal Role="Tarjetas">
               <PropertyRef Name="IDTarjeta" />
             </Principal>
-            <Dependent Role="Orden">
+            <Dependent Role="Ordens">
               <PropertyRef Name="IDTarjeta" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orden_Vendedor">
-          <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="0..1" />
-          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <End Role="Vendedors" Type="Self.Vendedors" Multiplicity="0..1" />
+          <End Role="Ordens" Type="Self.Ordens" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Vendedor">
+            <Principal Role="Vendedors">
               <PropertyRef Name="IDVendedor" />
             </Principal>
-            <Dependent Role="Orden">
+            <Dependent Role="Ordens">
               <PropertyRef Name="IDVendedor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tarjeta_Cliente">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
-          <End Role="Tarjeta" Type="Self.Tarjeta" Multiplicity="*" />
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="0..1" />
+          <End Role="Tarjetas" Type="Self.Tarjetas" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cliente">
+            <Principal Role="Clientes">
               <PropertyRef Name="IDCliente" />
             </Principal>
-            <Dependent Role="Tarjeta">
+            <Dependent Role="Tarjetas">
               <PropertyRef Name="IDCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ShoeyDatabaseModelStoreContainer">
-          <EntitySet Name="Calificacion" EntityType="Self.Calificacion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Carrito" EntityType="Self.Carrito" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DetallesOrden" EntityType="Self.DetallesOrden" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Direccion" EntityType="Self.Direccion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Orden" EntityType="Self.Orden" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tarjeta" EntityType="Self.Tarjeta" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Vendedor" EntityType="Self.Vendedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Calificacions" EntityType="Self.Calificacions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Carritoes" EntityType="Self.Carritoes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetallesOrdens" EntityType="Self.DetallesOrdens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Direccions" EntityType="Self.Direccions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventarios" EntityType="Self.Inventarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ordens" EntityType="Self.Ordens" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productoes" EntityType="Self.Productoes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tarjetas" EntityType="Self.Tarjetas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendedors" EntityType="Self.Vendedors" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Calificac__IDPro__440B1D61" Association="Self.FK__Calificac__IDPro__440B1D61">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="Calificacion" EntitySet="Calificacion" />
+            <End Role="Productoes" EntitySet="Productoes" />
+            <End Role="Calificacions" EntitySet="Calificacions" />
           </AssociationSet>
           <AssociationSet Name="FK__DetallesO__IDOrd__403A8C7D" Association="Self.FK__DetallesO__IDOrd__403A8C7D">
-            <End Role="Inventario" EntitySet="Inventario" />
-            <End Role="DetallesOrden" EntitySet="DetallesOrden" />
+            <End Role="Inventarios" EntitySet="Inventarios" />
+            <End Role="DetallesOrdens" EntitySet="DetallesOrdens" />
           </AssociationSet>
           <AssociationSet Name="FK__DetallesO__IDPro__412EB0B6" Association="Self.FK__DetallesO__IDPro__412EB0B6">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="DetallesOrden" EntitySet="DetallesOrden" />
+            <End Role="Productoes" EntitySet="Productoes" />
+            <End Role="DetallesOrdens" EntitySet="DetallesOrdens" />
           </AssociationSet>
           <AssociationSet Name="FK__Orden__IDCliente__3D5E1FD2" Association="Self.FK__Orden__IDCliente__3D5E1FD2">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Orden" EntitySet="Orden" />
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Ordens" EntitySet="Ordens" />
           </AssociationSet>
           <AssociationSet Name="FK__Producto__IDVend__38996AB5" Association="Self.FK__Producto__IDVend__38996AB5">
-            <End Role="Vendedor" EntitySet="Vendedor" />
-            <End Role="Producto" EntitySet="Producto" />
+            <End Role="Vendedors" EntitySet="Vendedors" />
+            <End Role="Productoes" EntitySet="Productoes" />
           </AssociationSet>
           <AssociationSet Name="FK_Carrito_Cliente1" Association="Self.FK_Carrito_Cliente1">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Carrito" EntitySet="Carrito" />
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Carritoes" EntitySet="Carritoes" />
           </AssociationSet>
           <AssociationSet Name="FK_Carrito_Inventario1" Association="Self.FK_Carrito_Inventario1">
-            <End Role="Inventario" EntitySet="Inventario" />
-            <End Role="Carrito" EntitySet="Carrito" />
+            <End Role="Inventarios" EntitySet="Inventarios" />
+            <End Role="Carritoes" EntitySet="Carritoes" />
           </AssociationSet>
           <AssociationSet Name="FK_Carrito_Producto1" Association="Self.FK_Carrito_Producto1">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="Carrito" EntitySet="Carrito" />
+            <End Role="Productoes" EntitySet="Productoes" />
+            <End Role="Carritoes" EntitySet="Carritoes" />
           </AssociationSet>
           <AssociationSet Name="FK_DetallesOrden_DetallesOrden" Association="Self.FK_DetallesOrden_DetallesOrden">
-            <End Role="DetallesOrden" EntitySet="DetallesOrden" />
-            <End Role="DetallesOrden1" EntitySet="DetallesOrden" />
+            <End Role="DetallesOrdens" EntitySet="DetallesOrdens" />
+            <End Role="DetallesOrdens1" EntitySet="DetallesOrdens" />
           </AssociationSet>
           <AssociationSet Name="FK_DetallesOrden_Orden" Association="Self.FK_DetallesOrden_Orden">
-            <End Role="Orden" EntitySet="Orden" />
-            <End Role="DetallesOrden" EntitySet="DetallesOrden" />
+            <End Role="Ordens" EntitySet="Ordens" />
+            <End Role="DetallesOrdens" EntitySet="DetallesOrdens" />
           </AssociationSet>
           <AssociationSet Name="FK_Direccion_Cliente1" Association="Self.FK_Direccion_Cliente1">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Direccion" EntitySet="Direccion" />
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Direccions" EntitySet="Direccions" />
           </AssociationSet>
           <AssociationSet Name="FK_Inventario_Producto1" Association="Self.FK_Inventario_Producto1">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="Inventario" EntitySet="Inventario" />
+            <End Role="Productoes" EntitySet="Productoes" />
+            <End Role="Inventarios" EntitySet="Inventarios" />
           </AssociationSet>
           <AssociationSet Name="FK_Orden_Direccion" Association="Self.FK_Orden_Direccion">
-            <End Role="Direccion" EntitySet="Direccion" />
-            <End Role="Orden" EntitySet="Orden" />
+            <End Role="Direccions" EntitySet="Direccions" />
+            <End Role="Ordens" EntitySet="Ordens" />
           </AssociationSet>
           <AssociationSet Name="FK_Orden_Orden" Association="Self.FK_Orden_Orden">
-            <End Role="Orden" EntitySet="Orden" />
-            <End Role="Orden1" EntitySet="Orden" />
+            <End Role="Ordens" EntitySet="Ordens" />
+            <End Role="Ordens1" EntitySet="Ordens" />
           </AssociationSet>
           <AssociationSet Name="FK_Orden_Tarjeta" Association="Self.FK_Orden_Tarjeta">
-            <End Role="Tarjeta" EntitySet="Tarjeta" />
-            <End Role="Orden" EntitySet="Orden" />
+            <End Role="Tarjetas" EntitySet="Tarjetas" />
+            <End Role="Ordens" EntitySet="Ordens" />
           </AssociationSet>
           <AssociationSet Name="FK_Orden_Vendedor" Association="Self.FK_Orden_Vendedor">
-            <End Role="Vendedor" EntitySet="Vendedor" />
-            <End Role="Orden" EntitySet="Orden" />
+            <End Role="Vendedors" EntitySet="Vendedors" />
+            <End Role="Ordens" EntitySet="Ordens" />
           </AssociationSet>
           <AssociationSet Name="FK_Tarjeta_Cliente" Association="Self.FK_Tarjeta_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Tarjeta" EntitySet="Tarjeta" />
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="Tarjetas" EntitySet="Tarjetas" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ShoeyDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -411,7 +410,7 @@
           <Property Name="IDProducto" Type="Int32" />
           <Property Name="Comentarios" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Calificacion1" Type="Int32" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK__Calificac__IDPro__440B1D61" FromRole="Calificacion" ToRole="Producto" />
+          <NavigationProperty Name="Productoes" Relationship="Self.FK__Calificac__IDPro__440B1D61" FromRole="Calificacions" ToRole="Productoes" />
         </EntityType>
         <EntityType Name="Carrito">
           <Key>
@@ -422,9 +421,9 @@
           <Property Name="IDProducto" Type="Int32" />
           <Property Name="IDInventario" Type="Int32" />
           <Property Name="Cantidad" Type="Int32" />
-          <NavigationProperty Name="Cliente" Relationship="Self.FK_Carrito_Cliente1" FromRole="Carrito" ToRole="Cliente" />
-          <NavigationProperty Name="Inventario" Relationship="Self.FK_Carrito_Inventario1" FromRole="Carrito" ToRole="Inventario" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK_Carrito_Producto1" FromRole="Carrito" ToRole="Producto" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_Carrito_Cliente1" FromRole="Carritoes" ToRole="Clientes" />
+          <NavigationProperty Name="Inventarios" Relationship="Self.FK_Carrito_Inventario1" FromRole="Carritoes" ToRole="Inventarios" />
+          <NavigationProperty Name="Productoes" Relationship="Self.FK_Carrito_Producto1" FromRole="Carritoes" ToRole="Productoes" />
         </EntityType>
         <EntityType Name="Cliente">
           <Key>
@@ -434,10 +433,10 @@
           <Property Name="NombreCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CorreoElectronico" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Contrasenna" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Carritoes" Relationship="Self.FK_Carrito_Cliente1" FromRole="Cliente" ToRole="Carrito" />
-          <NavigationProperty Name="Ordens" Relationship="Self.FK__Orden__IDCliente__3D5E1FD2" FromRole="Cliente" ToRole="Orden" />
-          <NavigationProperty Name="Direccions" Relationship="Self.FK_Direccion_Cliente1" FromRole="Cliente" ToRole="Direccion" />
-          <NavigationProperty Name="Tarjetas" Relationship="Self.FK_Tarjeta_Cliente" FromRole="Cliente" ToRole="Tarjeta" />
+          <NavigationProperty Name="Carritoes" Relationship="Self.FK_Carrito_Cliente1" FromRole="Clientes" ToRole="Carritoes" />
+          <NavigationProperty Name="Ordens" Relationship="Self.FK__Orden__IDCliente__3D5E1FD2" FromRole="Clientes" ToRole="Ordens" />
+          <NavigationProperty Name="Direccions" Relationship="Self.FK_Direccion_Cliente1" FromRole="Clientes" ToRole="Direccions" />
+          <NavigationProperty Name="Tarjetas" Relationship="Self.FK_Tarjeta_Cliente" FromRole="Clientes" ToRole="Tarjetas" />
         </EntityType>
         <EntityType Name="DetallesOrden">
           <Key>
@@ -448,11 +447,11 @@
           <Property Name="IDProducto" Type="Int32" />
           <Property Name="Cantidad" Type="Int32" />
           <Property Name="IDInventario" Type="Int32" />
-          <NavigationProperty Name="Inventario" Relationship="Self.FK__DetallesO__IDOrd__403A8C7D" FromRole="DetallesOrden" ToRole="Inventario" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK__DetallesO__IDPro__412EB0B6" FromRole="DetallesOrden" ToRole="Producto" />
-          <NavigationProperty Name="DetallesOrden1" Relationship="Self.FK_DetallesOrden_DetallesOrden" FromRole="DetallesOrden" ToRole="DetallesOrden1" />
-          <NavigationProperty Name="DetallesOrden2" Relationship="Self.FK_DetallesOrden_DetallesOrden" FromRole="DetallesOrden1" ToRole="DetallesOrden" />
-          <NavigationProperty Name="Orden" Relationship="Self.FK_DetallesOrden_Orden" FromRole="DetallesOrden" ToRole="Orden" />
+          <NavigationProperty Name="Inventarios" Relationship="Self.FK__DetallesO__IDOrd__403A8C7D" FromRole="DetallesOrdens" ToRole="Inventarios" />
+          <NavigationProperty Name="Productoes" Relationship="Self.FK__DetallesO__IDPro__412EB0B6" FromRole="DetallesOrdens" ToRole="Productoes" />
+          <NavigationProperty Name="DetallesOrdens1" Relationship="Self.FK_DetallesOrden_DetallesOrden" FromRole="DetallesOrdens" ToRole="DetallesOrdens1" />
+          <NavigationProperty Name="DetallesOrdens2" Relationship="Self.FK_DetallesOrden_DetallesOrden" FromRole="DetallesOrdens1" ToRole="DetallesOrdens" />
+          <NavigationProperty Name="Ordens" Relationship="Self.FK_DetallesOrden_Orden" FromRole="DetallesOrdens" ToRole="Ordens" />
         </EntityType>
         <EntityType Name="Direccion">
           <Key>
@@ -467,8 +466,8 @@
           <Property Name="Estado" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ZIP" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Cliente" Relationship="Self.FK_Direccion_Cliente1" FromRole="Direccion" ToRole="Cliente" />
-          <NavigationProperty Name="Ordens" Relationship="Self.FK_Orden_Direccion" FromRole="Direccion" ToRole="Orden" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_Direccion_Cliente1" FromRole="Direccions" ToRole="Clientes" />
+          <NavigationProperty Name="Ordens" Relationship="Self.FK_Orden_Direccion" FromRole="Direccions" ToRole="Ordens" />
         </EntityType>
         <EntityType Name="Inventario">
           <Key>
@@ -479,9 +478,9 @@
           <Property Name="TallaUS" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="Cantidad" Type="Int32" />
           <Property Name="Precio" Type="Decimal" Precision="10" Scale="2" />
-          <NavigationProperty Name="Carritoes" Relationship="Self.FK_Carrito_Inventario1" FromRole="Inventario" ToRole="Carrito" />
-          <NavigationProperty Name="DetallesOrdens" Relationship="Self.FK__DetallesO__IDOrd__403A8C7D" FromRole="Inventario" ToRole="DetallesOrden" />
-          <NavigationProperty Name="Producto" Relationship="Self.FK_Inventario_Producto1" FromRole="Inventario" ToRole="Producto" />
+          <NavigationProperty Name="Carritoes" Relationship="Self.FK_Carrito_Inventario1" FromRole="Inventarios" ToRole="Carritoes" />
+          <NavigationProperty Name="DetallesOrdens" Relationship="Self.FK__DetallesO__IDOrd__403A8C7D" FromRole="Inventarios" ToRole="DetallesOrdens" />
+          <NavigationProperty Name="Productoes" Relationship="Self.FK_Inventario_Producto1" FromRole="Inventarios" ToRole="Productoes" />
         </EntityType>
         <EntityType Name="Orden">
           <Key>
@@ -495,13 +494,13 @@
           <Property Name="MontoTotal" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IDVendedor" Type="Int32" />
-          <NavigationProperty Name="Cliente" Relationship="Self.FK__Orden__IDCliente__3D5E1FD2" FromRole="Orden" ToRole="Cliente" />
-          <NavigationProperty Name="DetallesOrdens" Relationship="Self.FK_DetallesOrden_Orden" FromRole="Orden" ToRole="DetallesOrden" />
-          <NavigationProperty Name="Direccion" Relationship="Self.FK_Orden_Direccion" FromRole="Orden" ToRole="Direccion" />
-          <NavigationProperty Name="Orden1" Relationship="Self.FK_Orden_Orden" FromRole="Orden" ToRole="Orden1" />
-          <NavigationProperty Name="Orden2" Relationship="Self.FK_Orden_Orden" FromRole="Orden1" ToRole="Orden" />
-          <NavigationProperty Name="Tarjeta" Relationship="Self.FK_Orden_Tarjeta" FromRole="Orden" ToRole="Tarjeta" />
-          <NavigationProperty Name="Vendedor" Relationship="Self.FK_Orden_Vendedor" FromRole="Orden" ToRole="Vendedor" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK__Orden__IDCliente__3D5E1FD2" FromRole="Ordens" ToRole="Clientes" />
+          <NavigationProperty Name="DetallesOrdens" Relationship="Self.FK_DetallesOrden_Orden" FromRole="Ordens" ToRole="DetallesOrdens" />
+          <NavigationProperty Name="Direccions" Relationship="Self.FK_Orden_Direccion" FromRole="Ordens" ToRole="Direccions" />
+          <NavigationProperty Name="Ordens1" Relationship="Self.FK_Orden_Orden" FromRole="Ordens" ToRole="Ordens1" />
+          <NavigationProperty Name="Ordens2" Relationship="Self.FK_Orden_Orden" FromRole="Ordens1" ToRole="Ordens" />
+          <NavigationProperty Name="Tarjetas" Relationship="Self.FK_Orden_Tarjeta" FromRole="Ordens" ToRole="Tarjetas" />
+          <NavigationProperty Name="Vendedors" Relationship="Self.FK_Orden_Vendedor" FromRole="Ordens" ToRole="Vendedors" />
         </EntityType>
         <EntityType Name="Producto">
           <Key>
@@ -515,11 +514,11 @@
           <Property Name="Marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Modelo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Calificacions" Relationship="Self.FK__Calificac__IDPro__440B1D61" FromRole="Producto" ToRole="Calificacion" />
-          <NavigationProperty Name="Carritoes" Relationship="Self.FK_Carrito_Producto1" FromRole="Producto" ToRole="Carrito" />
-          <NavigationProperty Name="DetallesOrdens" Relationship="Self.FK__DetallesO__IDPro__412EB0B6" FromRole="Producto" ToRole="DetallesOrden" />
-          <NavigationProperty Name="Inventarios" Relationship="Self.FK_Inventario_Producto1" FromRole="Producto" ToRole="Inventario" />
-          <NavigationProperty Name="Vendedor" Relationship="Self.FK__Producto__IDVend__38996AB5" FromRole="Producto" ToRole="Vendedor" />
+          <NavigationProperty Name="Calificacions" Relationship="Self.FK__Calificac__IDPro__440B1D61" FromRole="Productoes" ToRole="Calificacions" />
+          <NavigationProperty Name="Carritoes" Relationship="Self.FK_Carrito_Producto1" FromRole="Productoes" ToRole="Carritoes" />
+          <NavigationProperty Name="DetallesOrdens" Relationship="Self.FK__DetallesO__IDPro__412EB0B6" FromRole="Productoes" ToRole="DetallesOrdens" />
+          <NavigationProperty Name="Inventarios" Relationship="Self.FK_Inventario_Producto1" FromRole="Productoes" ToRole="Inventarios" />
+          <NavigationProperty Name="Vendedors" Relationship="Self.FK__Producto__IDVend__38996AB5" FromRole="Productoes" ToRole="Vendedors" />
         </EntityType>
         <EntityType Name="Tarjeta">
           <Key>
@@ -528,10 +527,10 @@
           <Property Name="IDTarjeta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IDCliente" Type="Int32" />
           <Property Name="Numero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Expiracion" Type="DateTime" Precision="0" />
+          <Property Name="Expiracion" Type="DateTime" Precision="3" />
           <Property Name="CVV" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Cliente" Relationship="Self.FK_Tarjeta_Cliente" FromRole="Tarjeta" ToRole="Cliente" />
-          <NavigationProperty Name="Ordens" Relationship="Self.FK_Orden_Tarjeta" FromRole="Tarjeta" ToRole="Orden" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_Tarjeta_Cliente" FromRole="Tarjetas" ToRole="Clientes" />
+          <NavigationProperty Name="Ordens" Relationship="Self.FK_Orden_Tarjeta" FromRole="Tarjetas" ToRole="Ordens" />
         </EntityType>
         <EntityType Name="Vendedor">
           <Key>
@@ -543,291 +542,291 @@
           <Property Name="Contrasenna" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="IBAN" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="Verificado" Type="Boolean" />
-          <NavigationProperty Name="Ordens" Relationship="Self.FK_Orden_Vendedor" FromRole="Vendedor" ToRole="Orden" />
-          <NavigationProperty Name="Productoes" Relationship="Self.FK__Producto__IDVend__38996AB5" FromRole="Vendedor" ToRole="Producto" />
+          <NavigationProperty Name="Ordens" Relationship="Self.FK_Orden_Vendedor" FromRole="Vendedors" ToRole="Ordens" />
+          <NavigationProperty Name="Productoes" Relationship="Self.FK__Producto__IDVend__38996AB5" FromRole="Vendedors" ToRole="Productoes" />
         </EntityType>
         <Association Name="FK__Calificac__IDPro__440B1D61">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
-          <End Role="Calificacion" Type="Self.Calificacion" Multiplicity="*" />
+          <End Role="Productoes" Type="ShoeyDatabaseModel.Producto" Multiplicity="0..1" />
+          <End Role="Calificacions" Type="ShoeyDatabaseModel.Calificacion" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
+            <Principal Role="Productoes">
               <PropertyRef Name="IDProducto" />
             </Principal>
-            <Dependent Role="Calificacion">
+            <Dependent Role="Calificacions">
               <PropertyRef Name="IDProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Carrito_Cliente1">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
-          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+          <End Role="Clientes" Type="ShoeyDatabaseModel.Cliente" Multiplicity="0..1" />
+          <End Role="Carritoes" Type="ShoeyDatabaseModel.Carrito" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cliente">
+            <Principal Role="Clientes">
               <PropertyRef Name="IDCliente" />
             </Principal>
-            <Dependent Role="Carrito">
+            <Dependent Role="Carritoes">
               <PropertyRef Name="IDCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Carrito_Inventario1">
-          <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
-          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+          <End Role="Inventarios" Type="ShoeyDatabaseModel.Inventario" Multiplicity="0..1" />
+          <End Role="Carritoes" Type="ShoeyDatabaseModel.Carrito" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Inventario">
+            <Principal Role="Inventarios">
               <PropertyRef Name="IDInventario" />
             </Principal>
-            <Dependent Role="Carrito">
+            <Dependent Role="Carritoes">
               <PropertyRef Name="IDInventario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Carrito_Producto1">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
-          <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+          <End Role="Productoes" Type="ShoeyDatabaseModel.Producto" Multiplicity="0..1" />
+          <End Role="Carritoes" Type="ShoeyDatabaseModel.Carrito" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
+            <Principal Role="Productoes">
               <PropertyRef Name="IDProducto" />
             </Principal>
-            <Dependent Role="Carrito">
+            <Dependent Role="Carritoes">
               <PropertyRef Name="IDProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Orden__IDCliente__3D5E1FD2">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
-          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <End Role="Clientes" Type="ShoeyDatabaseModel.Cliente" Multiplicity="0..1" />
+          <End Role="Ordens" Type="ShoeyDatabaseModel.Orden" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cliente">
+            <Principal Role="Clientes">
               <PropertyRef Name="IDCliente" />
             </Principal>
-            <Dependent Role="Orden">
+            <Dependent Role="Ordens">
               <PropertyRef Name="IDCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Direccion_Cliente1">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
-          <End Role="Direccion" Type="Self.Direccion" Multiplicity="*" />
+          <End Role="Clientes" Type="ShoeyDatabaseModel.Cliente" Multiplicity="0..1" />
+          <End Role="Direccions" Type="ShoeyDatabaseModel.Direccion" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cliente">
+            <Principal Role="Clientes">
               <PropertyRef Name="IDCliente" />
             </Principal>
-            <Dependent Role="Direccion">
+            <Dependent Role="Direccions">
               <PropertyRef Name="IDCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tarjeta_Cliente">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
-          <End Role="Tarjeta" Type="Self.Tarjeta" Multiplicity="*" />
+          <End Role="Clientes" Type="ShoeyDatabaseModel.Cliente" Multiplicity="0..1" />
+          <End Role="Tarjetas" Type="ShoeyDatabaseModel.Tarjeta" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cliente">
+            <Principal Role="Clientes">
               <PropertyRef Name="IDCliente" />
             </Principal>
-            <Dependent Role="Tarjeta">
+            <Dependent Role="Tarjetas">
               <PropertyRef Name="IDCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__DetallesO__IDOrd__403A8C7D">
-          <End Role="Inventario" Type="Self.Inventario" Multiplicity="0..1" />
-          <End Role="DetallesOrden" Type="Self.DetallesOrden" Multiplicity="*" />
+          <End Role="Inventarios" Type="ShoeyDatabaseModel.Inventario" Multiplicity="0..1" />
+          <End Role="DetallesOrdens" Type="ShoeyDatabaseModel.DetallesOrden" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Inventario">
+            <Principal Role="Inventarios">
               <PropertyRef Name="IDInventario" />
             </Principal>
-            <Dependent Role="DetallesOrden">
+            <Dependent Role="DetallesOrdens">
               <PropertyRef Name="IDInventario" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__DetallesO__IDPro__412EB0B6">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
-          <End Role="DetallesOrden" Type="Self.DetallesOrden" Multiplicity="*" />
+          <End Role="Productoes" Type="ShoeyDatabaseModel.Producto" Multiplicity="0..1" />
+          <End Role="DetallesOrdens" Type="ShoeyDatabaseModel.DetallesOrden" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
+            <Principal Role="Productoes">
               <PropertyRef Name="IDProducto" />
             </Principal>
-            <Dependent Role="DetallesOrden">
+            <Dependent Role="DetallesOrdens">
               <PropertyRef Name="IDProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DetallesOrden_DetallesOrden">
-          <End Role="DetallesOrden" Type="Self.DetallesOrden" Multiplicity="1" />
-          <End Role="DetallesOrden1" Type="Self.DetallesOrden" Multiplicity="0..1" />
+          <End Role="DetallesOrdens" Type="ShoeyDatabaseModel.DetallesOrden" Multiplicity="1" />
+          <End Role="DetallesOrdens1" Type="ShoeyDatabaseModel.DetallesOrden" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="DetallesOrden">
+            <Principal Role="DetallesOrdens">
               <PropertyRef Name="IDDetalleOrden" />
             </Principal>
-            <Dependent Role="DetallesOrden1">
+            <Dependent Role="DetallesOrdens1">
               <PropertyRef Name="IDDetalleOrden" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DetallesOrden_Orden">
-          <End Role="Orden" Type="Self.Orden" Multiplicity="0..1" />
-          <End Role="DetallesOrden" Type="Self.DetallesOrden" Multiplicity="*" />
+          <End Role="Ordens" Type="ShoeyDatabaseModel.Orden" Multiplicity="0..1" />
+          <End Role="DetallesOrdens" Type="ShoeyDatabaseModel.DetallesOrden" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Orden">
+            <Principal Role="Ordens">
               <PropertyRef Name="IDOrden" />
             </Principal>
-            <Dependent Role="DetallesOrden">
+            <Dependent Role="DetallesOrdens">
               <PropertyRef Name="IDOrden" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orden_Direccion">
-          <End Role="Direccion" Type="Self.Direccion" Multiplicity="0..1" />
-          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <End Role="Direccions" Type="ShoeyDatabaseModel.Direccion" Multiplicity="0..1" />
+          <End Role="Ordens" Type="ShoeyDatabaseModel.Orden" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Direccion">
+            <Principal Role="Direccions">
               <PropertyRef Name="IDDireccion" />
             </Principal>
-            <Dependent Role="Orden">
+            <Dependent Role="Ordens">
               <PropertyRef Name="IDDireccion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Inventario_Producto1">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="Inventario" Type="Self.Inventario" Multiplicity="*" />
+          <End Role="Productoes" Type="ShoeyDatabaseModel.Producto" Multiplicity="1" />
+          <End Role="Inventarios" Type="ShoeyDatabaseModel.Inventario" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
+            <Principal Role="Productoes">
               <PropertyRef Name="IDProducto" />
             </Principal>
-            <Dependent Role="Inventario">
+            <Dependent Role="Inventarios">
               <PropertyRef Name="IDProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orden_Orden">
-          <End Role="Orden" Type="Self.Orden" Multiplicity="1" />
-          <End Role="Orden1" Type="Self.Orden" Multiplicity="0..1" />
+          <End Role="Ordens" Type="ShoeyDatabaseModel.Orden" Multiplicity="1" />
+          <End Role="Ordens1" Type="ShoeyDatabaseModel.Orden" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="Orden">
+            <Principal Role="Ordens">
               <PropertyRef Name="IDOrden" />
             </Principal>
-            <Dependent Role="Orden1">
+            <Dependent Role="Ordens1">
               <PropertyRef Name="IDOrden" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orden_Tarjeta">
-          <End Role="Tarjeta" Type="Self.Tarjeta" Multiplicity="0..1" />
-          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <End Role="Tarjetas" Type="ShoeyDatabaseModel.Tarjeta" Multiplicity="0..1" />
+          <End Role="Ordens" Type="ShoeyDatabaseModel.Orden" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Tarjeta">
+            <Principal Role="Tarjetas">
               <PropertyRef Name="IDTarjeta" />
             </Principal>
-            <Dependent Role="Orden">
+            <Dependent Role="Ordens">
               <PropertyRef Name="IDTarjeta" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orden_Vendedor">
-          <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="0..1" />
-          <End Role="Orden" Type="Self.Orden" Multiplicity="*" />
+          <End Role="Vendedors" Type="ShoeyDatabaseModel.Vendedor" Multiplicity="0..1" />
+          <End Role="Ordens" Type="ShoeyDatabaseModel.Orden" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Vendedor">
+            <Principal Role="Vendedors">
               <PropertyRef Name="IDVendedor" />
             </Principal>
-            <Dependent Role="Orden">
+            <Dependent Role="Ordens">
               <PropertyRef Name="IDVendedor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Producto__IDVend__38996AB5">
-          <End Role="Vendedor" Type="Self.Vendedor" Multiplicity="0..1" />
-          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
+          <End Role="Vendedors" Type="ShoeyDatabaseModel.Vendedor" Multiplicity="0..1" />
+          <End Role="Productoes" Type="ShoeyDatabaseModel.Producto" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Vendedor">
+            <Principal Role="Vendedors">
               <PropertyRef Name="IDVendedor" />
             </Principal>
-            <Dependent Role="Producto">
+            <Dependent Role="Productoes">
               <PropertyRef Name="IDVendedor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ShoeyDatabaseEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Calificacions" EntityType="Self.Calificacion" />
-          <EntitySet Name="Carritoes" EntityType="Self.Carrito" />
-          <EntitySet Name="Clientes" EntityType="Self.Cliente" />
-          <EntitySet Name="DetallesOrdens" EntityType="Self.DetallesOrden" />
-          <EntitySet Name="Direccions" EntityType="Self.Direccion" />
-          <EntitySet Name="Inventarios" EntityType="Self.Inventario" />
-          <EntitySet Name="Ordens" EntityType="Self.Orden" />
-          <EntitySet Name="Productoes" EntityType="Self.Producto" />
-          <EntitySet Name="Tarjetas" EntityType="Self.Tarjeta" />
-          <EntitySet Name="Vendedors" EntityType="Self.Vendedor" />
+          <EntitySet Name="Calificacion" EntityType="ShoeyDatabaseModel.Calificacion" />
+          <EntitySet Name="Carrito" EntityType="ShoeyDatabaseModel.Carrito" />
+          <EntitySet Name="Cliente" EntityType="ShoeyDatabaseModel.Cliente" />
+          <EntitySet Name="DetallesOrden" EntityType="ShoeyDatabaseModel.DetallesOrden" />
+          <EntitySet Name="Direccion" EntityType="ShoeyDatabaseModel.Direccion" />
+          <EntitySet Name="Inventario" EntityType="ShoeyDatabaseModel.Inventario" />
+          <EntitySet Name="Orden" EntityType="ShoeyDatabaseModel.Orden" />
+          <EntitySet Name="Producto" EntityType="ShoeyDatabaseModel.Producto" />
+          <EntitySet Name="Tarjeta" EntityType="ShoeyDatabaseModel.Tarjeta" />
+          <EntitySet Name="Vendedor" EntityType="ShoeyDatabaseModel.Vendedor" />
           <AssociationSet Name="FK__Calificac__IDPro__440B1D61" Association="Self.FK__Calificac__IDPro__440B1D61">
-            <End Role="Producto" EntitySet="Productoes" />
-            <End Role="Calificacion" EntitySet="Calificacions" />
+            <End Role="Productoes" EntitySet="Producto" />
+            <End Role="Calificacions" EntitySet="Calificacion" />
           </AssociationSet>
           <AssociationSet Name="FK_Carrito_Cliente1" Association="Self.FK_Carrito_Cliente1">
-            <End Role="Cliente" EntitySet="Clientes" />
-            <End Role="Carrito" EntitySet="Carritoes" />
+            <End Role="Clientes" EntitySet="Cliente" />
+            <End Role="Carritoes" EntitySet="Carrito" />
           </AssociationSet>
           <AssociationSet Name="FK_Carrito_Inventario1" Association="Self.FK_Carrito_Inventario1">
-            <End Role="Inventario" EntitySet="Inventarios" />
-            <End Role="Carrito" EntitySet="Carritoes" />
+            <End Role="Inventarios" EntitySet="Inventario" />
+            <End Role="Carritoes" EntitySet="Carrito" />
           </AssociationSet>
           <AssociationSet Name="FK_Carrito_Producto1" Association="Self.FK_Carrito_Producto1">
-            <End Role="Producto" EntitySet="Productoes" />
-            <End Role="Carrito" EntitySet="Carritoes" />
+            <End Role="Productoes" EntitySet="Producto" />
+            <End Role="Carritoes" EntitySet="Carrito" />
           </AssociationSet>
           <AssociationSet Name="FK__Orden__IDCliente__3D5E1FD2" Association="Self.FK__Orden__IDCliente__3D5E1FD2">
-            <End Role="Cliente" EntitySet="Clientes" />
-            <End Role="Orden" EntitySet="Ordens" />
+            <End Role="Clientes" EntitySet="Cliente" />
+            <End Role="Ordens" EntitySet="Orden" />
           </AssociationSet>
           <AssociationSet Name="FK_Direccion_Cliente1" Association="Self.FK_Direccion_Cliente1">
-            <End Role="Cliente" EntitySet="Clientes" />
-            <End Role="Direccion" EntitySet="Direccions" />
+            <End Role="Clientes" EntitySet="Cliente" />
+            <End Role="Direccions" EntitySet="Direccion" />
           </AssociationSet>
           <AssociationSet Name="FK_Tarjeta_Cliente" Association="Self.FK_Tarjeta_Cliente">
-            <End Role="Cliente" EntitySet="Clientes" />
-            <End Role="Tarjeta" EntitySet="Tarjetas" />
+            <End Role="Clientes" EntitySet="Cliente" />
+            <End Role="Tarjetas" EntitySet="Tarjeta" />
           </AssociationSet>
           <AssociationSet Name="FK__DetallesO__IDOrd__403A8C7D" Association="Self.FK__DetallesO__IDOrd__403A8C7D">
-            <End Role="Inventario" EntitySet="Inventarios" />
-            <End Role="DetallesOrden" EntitySet="DetallesOrdens" />
+            <End Role="Inventarios" EntitySet="Inventario" />
+            <End Role="DetallesOrdens" EntitySet="DetallesOrden" />
           </AssociationSet>
           <AssociationSet Name="FK__DetallesO__IDPro__412EB0B6" Association="Self.FK__DetallesO__IDPro__412EB0B6">
-            <End Role="Producto" EntitySet="Productoes" />
-            <End Role="DetallesOrden" EntitySet="DetallesOrdens" />
+            <End Role="Productoes" EntitySet="Producto" />
+            <End Role="DetallesOrdens" EntitySet="DetallesOrden" />
           </AssociationSet>
           <AssociationSet Name="FK_DetallesOrden_DetallesOrden" Association="Self.FK_DetallesOrden_DetallesOrden">
-            <End Role="DetallesOrden" EntitySet="DetallesOrdens" />
-            <End Role="DetallesOrden1" EntitySet="DetallesOrdens" />
+            <End Role="DetallesOrdens" EntitySet="DetallesOrden" />
+            <End Role="DetallesOrdens1" EntitySet="DetallesOrden" />
           </AssociationSet>
           <AssociationSet Name="FK_DetallesOrden_Orden" Association="Self.FK_DetallesOrden_Orden">
-            <End Role="Orden" EntitySet="Ordens" />
-            <End Role="DetallesOrden" EntitySet="DetallesOrdens" />
+            <End Role="Ordens" EntitySet="Orden" />
+            <End Role="DetallesOrdens" EntitySet="DetallesOrden" />
           </AssociationSet>
           <AssociationSet Name="FK_Orden_Direccion" Association="Self.FK_Orden_Direccion">
-            <End Role="Direccion" EntitySet="Direccions" />
-            <End Role="Orden" EntitySet="Ordens" />
+            <End Role="Direccions" EntitySet="Direccion" />
+            <End Role="Ordens" EntitySet="Orden" />
           </AssociationSet>
           <AssociationSet Name="FK_Inventario_Producto1" Association="Self.FK_Inventario_Producto1">
-            <End Role="Producto" EntitySet="Productoes" />
-            <End Role="Inventario" EntitySet="Inventarios" />
+            <End Role="Productoes" EntitySet="Producto" />
+            <End Role="Inventarios" EntitySet="Inventario" />
           </AssociationSet>
           <AssociationSet Name="FK_Orden_Orden" Association="Self.FK_Orden_Orden">
-            <End Role="Orden" EntitySet="Ordens" />
-            <End Role="Orden1" EntitySet="Ordens" />
+            <End Role="Ordens" EntitySet="Orden" />
+            <End Role="Ordens1" EntitySet="Orden" />
           </AssociationSet>
           <AssociationSet Name="FK_Orden_Tarjeta" Association="Self.FK_Orden_Tarjeta">
-            <End Role="Tarjeta" EntitySet="Tarjetas" />
-            <End Role="Orden" EntitySet="Ordens" />
+            <End Role="Tarjetas" EntitySet="Tarjeta" />
+            <End Role="Ordens" EntitySet="Orden" />
           </AssociationSet>
           <AssociationSet Name="FK_Orden_Vendedor" Association="Self.FK_Orden_Vendedor">
-            <End Role="Vendedor" EntitySet="Vendedors" />
-            <End Role="Orden" EntitySet="Ordens" />
+            <End Role="Vendedors" EntitySet="Vendedor" />
+            <End Role="Ordens" EntitySet="Orden" />
           </AssociationSet>
           <AssociationSet Name="FK__Producto__IDVend__38996AB5" Association="Self.FK__Producto__IDVend__38996AB5">
-            <End Role="Vendedor" EntitySet="Vendedors" />
-            <End Role="Producto" EntitySet="Productoes" />
+            <End Role="Vendedors" EntitySet="Vendedor" />
+            <End Role="Productoes" EntitySet="Producto" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -836,19 +835,19 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ShoeyDatabaseModelStoreContainer" CdmEntityContainer="ShoeyDatabaseEntities">
-          <EntitySetMapping Name="Calificacions">
+          <EntitySetMapping Name="Calificacion">
             <EntityTypeMapping TypeName="ShoeyDatabaseModel.Calificacion">
-              <MappingFragment StoreEntitySet="Calificacion">
+              <MappingFragment StoreEntitySet="Calificacions">
                 <ScalarProperty Name="IDcalificacion" ColumnName="IDcalificacion" />
                 <ScalarProperty Name="IDProducto" ColumnName="IDProducto" />
                 <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
-                <ScalarProperty Name="Calificacion1" ColumnName="Calificacion" />
+                <ScalarProperty Name="Calificacion1" ColumnName="Calificacion1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Carritoes">
+          <EntitySetMapping Name="Carrito">
             <EntityTypeMapping TypeName="ShoeyDatabaseModel.Carrito">
-              <MappingFragment StoreEntitySet="Carrito">
+              <MappingFragment StoreEntitySet="Carritoes">
                 <ScalarProperty Name="IDCarrito" ColumnName="IDCarrito" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="IDProducto" ColumnName="IDProducto" />
@@ -857,9 +856,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Clientes">
+          <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="ShoeyDatabaseModel.Cliente">
-              <MappingFragment StoreEntitySet="Cliente">
+              <MappingFragment StoreEntitySet="Clientes">
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="NombreCliente" ColumnName="NombreCliente" />
                 <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
@@ -867,9 +866,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DetallesOrdens">
+          <EntitySetMapping Name="DetallesOrden">
             <EntityTypeMapping TypeName="ShoeyDatabaseModel.DetallesOrden">
-              <MappingFragment StoreEntitySet="DetallesOrden">
+              <MappingFragment StoreEntitySet="DetallesOrdens">
                 <ScalarProperty Name="IDDetalleOrden" ColumnName="IDDetalleOrden" />
                 <ScalarProperty Name="IDOrden" ColumnName="IDOrden" />
                 <ScalarProperty Name="IDProducto" ColumnName="IDProducto" />
@@ -878,9 +877,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Direccions">
+          <EntitySetMapping Name="Direccion">
             <EntityTypeMapping TypeName="ShoeyDatabaseModel.Direccion">
-              <MappingFragment StoreEntitySet="Direccion">
+              <MappingFragment StoreEntitySet="Direccions">
                 <ScalarProperty Name="IDDireccion" ColumnName="IDDireccion" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -893,9 +892,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Inventarios">
+          <EntitySetMapping Name="Inventario">
             <EntityTypeMapping TypeName="ShoeyDatabaseModel.Inventario">
-              <MappingFragment StoreEntitySet="Inventario">
+              <MappingFragment StoreEntitySet="Inventarios">
                 <ScalarProperty Name="IDInventario" ColumnName="IDInventario" />
                 <ScalarProperty Name="IDProducto" ColumnName="IDProducto" />
                 <ScalarProperty Name="TallaUS" ColumnName="TallaUS" />
@@ -904,9 +903,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Ordens">
+          <EntitySetMapping Name="Orden">
             <EntityTypeMapping TypeName="ShoeyDatabaseModel.Orden">
-              <MappingFragment StoreEntitySet="Orden">
+              <MappingFragment StoreEntitySet="Ordens">
                 <ScalarProperty Name="IDOrden" ColumnName="IDOrden" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="IDDireccion" ColumnName="IDDireccion" />
@@ -918,9 +917,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Productoes">
+          <EntitySetMapping Name="Producto">
             <EntityTypeMapping TypeName="ShoeyDatabaseModel.Producto">
-              <MappingFragment StoreEntitySet="Producto">
+              <MappingFragment StoreEntitySet="Productoes">
                 <ScalarProperty Name="IDProducto" ColumnName="IDProducto" />
                 <ScalarProperty Name="IDVendedor" ColumnName="IDVendedor" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -932,9 +931,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Tarjetas">
+          <EntitySetMapping Name="Tarjeta">
             <EntityTypeMapping TypeName="ShoeyDatabaseModel.Tarjeta">
-              <MappingFragment StoreEntitySet="Tarjeta">
+              <MappingFragment StoreEntitySet="Tarjetas">
                 <ScalarProperty Name="IDTarjeta" ColumnName="IDTarjeta" />
                 <ScalarProperty Name="IDCliente" ColumnName="IDCliente" />
                 <ScalarProperty Name="Numero" ColumnName="Numero" />
@@ -943,9 +942,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Vendedors">
+          <EntitySetMapping Name="Vendedor">
             <EntityTypeMapping TypeName="ShoeyDatabaseModel.Vendedor">
-              <MappingFragment StoreEntitySet="Vendedor">
+              <MappingFragment StoreEntitySet="Vendedors">
                 <ScalarProperty Name="IDVendedor" ColumnName="IDVendedor" />
                 <ScalarProperty Name="NombreVendedor" ColumnName="NombreVendedor" />
                 <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
@@ -969,10 +968,10 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

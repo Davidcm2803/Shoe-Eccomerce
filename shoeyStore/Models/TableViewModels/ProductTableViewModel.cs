@@ -15,20 +15,20 @@ namespace shoeyStore.Models.ViewModels
             this.DetallesOrdens = new HashSet<DetallesOrden>();
         }
 
-        public int IDProducto { get; set; }
-        public Nullable<int> IDVendedor { get; set; }
-        public string Nombre { get; set; }
-        public string Categoria { get; set; }
-        public string Genero { get; set; }
-        public string Marca { get; set; }
-        public string Modelo { get; set; }
-        public byte[] Imagen { get; set; }
+        public int IDProductoes { get; set; }
+        public Nullable<int> IDVendedors { get; set; }
+        public string Nombres { get; set; }
+        public string Categorias { get; set; }
+        public string Generos { get; set; }
+        public string Marcas { get; set; }
+        public string Modelos { get; set; }
+        public byte[] Imagens { get; set; }
 
         public string ItemName
         {
             get
             {
-                return $"{Marca} {Modelo}";
+                return $"{Marcas} {Modelos}";
             }
 
             set => ItemName = value;
@@ -50,26 +50,31 @@ namespace shoeyStore.Models.ViewModels
             };
         public decimal? GetMinimumPrice()
         {
-            if (InventoryEntries == null || InventoryEntries.Count == 0)
+            if (InventoryEntries == null || !InventoryEntries.Any(entry => entry.Precio.HasValue))
             {
-                return null; // No entries, return null or any default value as appropriate
+                return null; // No valid entries with a non-null price, return null or a default value.
             }
 
-            // Get the minimum price from the InventoryEntries list
-            decimal minPrice = (decimal)InventoryEntries.Min(entry => entry.Precio);
+            // Get the minimum price from the InventoryEntries list, ignoring null prices.
+            decimal minPrice = InventoryEntries
+                                .Where(entry => entry.Precio.HasValue)  // Only consider entries with a valid price
+                                .Min(entry => entry.Precio.Value);
             return minPrice;
         }
 
         public decimal? GetMaximumPrice()
         {
-            if (InventoryEntries == null || InventoryEntries.Count == 0)
+            if (InventoryEntries == null || !InventoryEntries.Any(entry => entry.Precio.HasValue))
             {
-                return null; // No entries, return null or any default value as appropriate
+                return null; // No valid entries with a non-null price, return null or a default value.
             }
 
-            // Get the maximum price from the InventoryEntries list
-            decimal maxPrice = (decimal)InventoryEntries.Max(entry => entry.Precio);
+            // Get the maximum price from the InventoryEntries list, ignoring null prices.
+            decimal maxPrice = InventoryEntries
+                                .Where(entry => entry.Precio.HasValue)  // Only consider entries with a valid price
+                                .Max(entry => entry.Precio.Value);
             return maxPrice;
         }
+
     }
 }

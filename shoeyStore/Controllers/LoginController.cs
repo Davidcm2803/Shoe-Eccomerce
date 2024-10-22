@@ -23,7 +23,7 @@ namespace shoeyStore.Controllers
             {
                 using (var db = new ShoeyDatabaseEntities())
                 {
-                    var list = from user in db.Clientes
+                    var list = from user in db.Cliente
                               where user.CorreoElectronico == Email && user.Contrasenna == Password
                               select user;
                     //If the list count is more than 0 it means the list was filled and the user was found 
